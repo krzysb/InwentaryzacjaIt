@@ -39,6 +39,13 @@ final assetListProvider = StreamProvider<List<Asset>>((ref) {
   return ref.watch(assetRepositoryProvider).watchAssets(filter);
 });
 
+/// Caly (niefiltrowany) sprzet - niezalezny od filtrow ustawionych na
+/// glownej liscie. Uzywane tam, gdzie trzeba widziec wszystko naraz
+/// (wykrywanie duplikatow, statystyki).
+final allAssetsProvider = StreamProvider<List<Asset>>((ref) {
+  return ref.watch(assetRepositoryProvider).watchAssets(const AssetFilter());
+});
+
 final assetDetailProvider = StreamProvider.family<Asset?, String>((ref, id) {
   return ref.watch(assetRepositoryProvider).watchAsset(id);
 });

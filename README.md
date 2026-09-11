@@ -99,7 +99,8 @@ firestore.indexes.json   # indeksy zlozone pod filtrowanie
 - ✅ Filtr "niekompletne" na liscie sprzetu (odpowiednik ekranu "do uzupelnienia")
 - ✅ Slowniki kategorii/pomieszczen (CRUD w UI - dodawanie/edycja/usuwanie, bez konsoli Firebase)
 - ✅ Wykrywanie mozliwych duplikatow (po numerze seryjnym) i ekran scalania rekordow pole po polu
-- ⏳ Role uzytkownikow w UI (admin/editor/viewer) i dashboard
+- ✅ Dashboard ze statystykami (liczba sprzetu, niekompletne/wycofane, rozklad wg statusu/kategorii/pomieszczenia)
+- ⏳ Role uzytkownikow w UI (admin/editor/viewer) - role dzialaja w regulach Firestore, ale nie ma jeszcze ekranu do ich nadawania w appce
 
 ## Import danych z Vulcan (Inwentarz Optivum)
 

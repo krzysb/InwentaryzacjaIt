@@ -1,15 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../assets/data/asset_repository.dart';
 import '../../assets/domain/asset.dart';
 import '../../assets/domain/asset_status.dart';
 import '../../assets/presentation/providers/asset_providers.dart';
-
-/// Caly (niefiltrowany) sprzet - niezalezny od filtrow ustawionych na
-/// glownej liscie, bo wykrywanie duplikatow musi widziec wszystko naraz.
-final allAssetsProvider = StreamProvider<List<Asset>>((ref) {
-  return ref.watch(assetRepositoryProvider).watchAssets(const AssetFilter());
-});
 
 /// Grupuje sprzet po numerze seryjnym i zwraca tylko grupy z wiecej niz
 /// jednym aktywnym rekordem - to najbardziej wiarygodny sygnal duplikatu
