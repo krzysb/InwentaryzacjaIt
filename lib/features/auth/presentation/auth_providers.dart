@@ -18,3 +18,7 @@ final appUserProvider = StreamProvider<AppUser?>((ref) {
   if (user == null) return Stream.value(null);
   return ref.watch(authRepositoryProvider).watchAppUser(user.uid);
 });
+
+final allUsersProvider = StreamProvider<List<AppUser>>((ref) {
+  return ref.watch(authRepositoryProvider).watchAllUsers();
+});

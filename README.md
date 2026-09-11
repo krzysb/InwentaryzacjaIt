@@ -100,7 +100,12 @@ firestore.indexes.json   # indeksy zlozone pod filtrowanie
 - ✅ Slowniki kategorii/pomieszczen (CRUD w UI - dodawanie/edycja/usuwanie, bez konsoli Firebase)
 - ✅ Wykrywanie mozliwych duplikatow (po numerze seryjnym) i ekran scalania rekordow pole po polu
 - ✅ Dashboard ze statystykami (liczba sprzetu, niekompletne/wycofane, rozklad wg statusu/kategorii/pomieszczenia)
-- ⏳ Role uzytkownikow w UI (admin/editor/viewer) - role dzialaja w regulach Firestore, ale nie ma jeszcze ekranu do ich nadawania w appce
+- ✅ Zarzadzanie rolami uzytkownikow w UI (admin/editor/viewer) - dostepne tylko dla admina, w menu na liscie sprzetu
+
+Wszystkie punkty z pierwotnego planu (Faza 0-4) sa zrealizowane. Zakladanie
+nowych **kont** (nie rol) zostaje recznie w konsoli Firebase Authentication -
+SDK klienta nie moze utworzyc konta bez wylogowania biezacego admina, wiec to
+wymaga Admin SDK/Cloud Function, co wykracza poza MVP.
 
 ## Import danych z Vulcan (Inwentarz Optivum)
 

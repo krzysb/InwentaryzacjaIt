@@ -30,4 +30,17 @@ class AuthRepository {
         .snapshots()
         .map((doc) => doc.exists ? AppUser.fromFirestore(doc) : null);
   }
+
+  /// Wszyscy uzytkownicy z przypisana rola - widoczne tylko dla admina
+  /// (reguly Firestore odrzuca zapytanie dla kogokolwiek innego).
+  Stream<List<AppUser>> watchAllUsers() {
+    return _firestore
+        .collection('users')
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map(AppUser.fromFirestore).toList());
+  }
+
+  Future<void> updateUserRole(String uid, AppRole role) async {
+    await _firestore.collection('users').doc(uid).update({'role': role.name});
+  }
 }
