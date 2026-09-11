@@ -63,7 +63,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
               color: Colors.black54,
               child: Text(
                 widget.mode == ScannerMode.findAsset
-                    ? 'Zeskanuj etykiete QR na sprzecie'
+                    ? 'Zeskanuj wlasna etykiete QR albo kod z numerem seryjnym producenta'
                     : 'Zeskanuj kod kreskowy/QR z numerem seryjnym producenta',
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: Colors.white),

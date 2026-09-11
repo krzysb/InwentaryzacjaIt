@@ -5,8 +5,11 @@ import 'package:go_router/go_router.dart';
 import '../../assets/presentation/providers/asset_providers.dart';
 import 'scanner_screen.dart';
 
-/// Laczy skaner w trybie "znajdz sprzet" z wyszukaniem rekordu po assetTag
-/// i przejsciem do jego szczegolow.
+/// Laczy skaner w trybie "znajdz sprzet" z wyszukaniem rekordu i przejsciem
+/// do jego szczegolow. Szuka najpierw po wlasnym assetTag (nasza naklejka
+/// QR), a gdy nie znajdzie - po numerze seryjnym producenta, bo wiekszy
+/// wiekszosc juz zinwentaryzowanego sprzetu ma na razie tylko oryginalna
+/// etykiete producenta, a nie nasza wydrukowana etykiete QR.
 class FindAssetScannerScreen extends ConsumerStatefulWidget {
   const FindAssetScannerScreen({super.key});
 
@@ -37,7 +40,9 @@ class _FindAssetScannerScreenState
       context.pop();
       return;
     }
-    final asset = await ref.read(assetRepositoryProvider).findByAssetTag(tag);
+    final repo = ref.read(assetRepositoryProvider);
+    final asset =
+        await repo.findByAssetTag(tag) ?? await repo.findBySerialNumber(tag);
     if (!mounted) return;
     if (asset == null) {
       ScaffoldMessenger.of(context).showSnackBar(
