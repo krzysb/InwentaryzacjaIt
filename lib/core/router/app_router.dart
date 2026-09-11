@@ -8,6 +8,7 @@ import '../../features/assets/presentation/screens/asset_form_screen.dart';
 import '../../features/assets/presentation/screens/asset_list_screen.dart';
 import '../../features/auth/presentation/auth_providers.dart';
 import '../../features/auth/presentation/login_screen.dart';
+import '../../features/import_export/presentation/import_wizard_screen.dart';
 import '../../features/scanner/presentation/find_asset_scanner_screen.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -36,6 +37,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => AssetFormScreen(assetId: state.pathParameters['id']!),
       ),
       GoRoute(path: '/scan-find', builder: (context, state) => const FindAssetScannerScreen()),
+      GoRoute(path: '/import', builder: (context, state) => const ImportWizardScreen()),
     ],
   );
 });

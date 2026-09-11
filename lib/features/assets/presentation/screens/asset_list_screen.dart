@@ -21,6 +21,11 @@ class AssetListScreen extends ConsumerWidget {
         title: const Text('Sprzet IT'),
         actions: [
           IconButton(
+            icon: const Icon(Icons.upload_file),
+            tooltip: 'Import z pliku',
+            onPressed: () => context.push('/import'),
+          ),
+          IconButton(
             icon: const Icon(Icons.qr_code_scanner),
             tooltip: 'Znajdz sprzet (skan)',
             onPressed: () => context.push('/scan-find'),

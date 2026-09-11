@@ -90,8 +90,9 @@ firestore.indexes.json   # indeksy zlozone pod filtrowanie
 - ✅ Formularz dodaj/edytuj sprzet, ze skanowaniem numeru seryjnego
 - ✅ Skaner w trybie "znajdz sprzet" (skan wlasnego QR -> szczegoly)
 - ✅ Wykrywanie duplikatu po numerze seryjnym przy dodawaniu
+- ✅ Import CSV/Excel z mapowaniem kolumn (obsluguje wiele arkuszy, dowolny wiersz naglowka,
+  dopasowanie kategorii/pomieszczen, wykrywanie duplikatow/konfliktow wzgledem bazy i wewnatrz pliku)
 - ⏳ Generowanie i druk etykiet QR (PDF)
-- ⏳ Import CSV/Excel z mapowaniem kolumn (m.in. eksport z Inwentarza Optivum/Vulcan)
 - ⏳ Ekran "do uzupelnienia" i scalanie duplikatow
 - ⏳ Slowniki kategorii/pomieszczen (CRUD w UI)
 - ⏳ Role uzytkownikow w UI (admin/editor/viewer) i dashboard
