@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:printing/printing.dart';
 
 import '../../../dictionaries/presentation/dictionary_providers.dart';
+import '../../../labels/data/label_pdf_generator.dart';
 import '../../domain/asset_status.dart';
 import '../../domain/history_entry.dart';
 import '../providers/asset_providers.dart';
@@ -103,12 +105,22 @@ class AssetDetailScreen extends ConsumerWidget {
                           _showMoveDialog(context, ref, assetId, locations),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: OutlinedButton.icon(
                       icon: const Icon(Icons.sync_alt),
-                      label: const Text('Zmien status'),
+                      label: const Text('Status'),
                       onPressed: () => _showStatusDialog(context, ref, assetId),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      icon: const Icon(Icons.qr_code_2),
+                      label: const Text('Etykieta'),
+                      onPressed: () => Printing.layoutPdf(
+                        onLayout: (_) => LabelPdfGenerator.build([asset]),
+                      ),
                     ),
                   ),
                 ],

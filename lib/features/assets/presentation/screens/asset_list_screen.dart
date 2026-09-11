@@ -26,6 +26,11 @@ class AssetListScreen extends ConsumerWidget {
             onPressed: () => context.push('/import'),
           ),
           IconButton(
+            icon: const Icon(Icons.qr_code_2),
+            tooltip: 'Drukuj etykiety',
+            onPressed: () => context.push('/labels'),
+          ),
+          IconButton(
             icon: const Icon(Icons.qr_code_scanner),
             tooltip: 'Znajdz sprzet (skan)',
             onPressed: () => context.push('/scan-find'),
