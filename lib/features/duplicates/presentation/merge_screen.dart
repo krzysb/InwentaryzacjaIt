@@ -207,19 +207,23 @@ class _FieldChoice extends StatelessWidget {
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
               ),
-              RadioListTile<_Pick>(
-                dense: true,
-                value: _Pick.a,
+              RadioGroup<_Pick>(
                 groupValue: picked,
                 onChanged: (p) => onChanged(fieldKey, p!),
-                title: Text(valueA, overflow: TextOverflow.ellipsis),
-              ),
-              RadioListTile<_Pick>(
-                dense: true,
-                value: _Pick.b,
-                groupValue: picked,
-                onChanged: (p) => onChanged(fieldKey, p!),
-                title: Text(valueB, overflow: TextOverflow.ellipsis),
+                child: Column(
+                  children: [
+                    RadioListTile<_Pick>(
+                      dense: true,
+                      value: _Pick.a,
+                      title: Text(valueA, overflow: TextOverflow.ellipsis),
+                    ),
+                    RadioListTile<_Pick>(
+                      dense: true,
+                      value: _Pick.b,
+                      title: Text(valueB, overflow: TextOverflow.ellipsis),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
