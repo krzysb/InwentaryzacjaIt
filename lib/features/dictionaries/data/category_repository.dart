@@ -18,8 +18,15 @@ class CategoryRepository {
         .map((snapshot) => snapshot.docs.map(Category.fromFirestore).toList());
   }
 
-  Future<void> upsertCategory(Category category) async {
+  /// Tworzy nowa kategorie (gdy [category.id] jest puste) albo nadpisuje
+  /// istniejaca. Zwraca ID zapisanego dokumentu.
+  Future<String> upsertCategory(Category category) async {
+    if (category.id.isEmpty) {
+      final doc = await _categories.add(category.toFirestore());
+      return doc.id;
+    }
     await _categories.doc(category.id).set(category.toFirestore());
+    return category.id;
   }
 
   Future<void> deleteCategory(String id) async {

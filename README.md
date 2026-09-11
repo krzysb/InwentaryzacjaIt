@@ -54,10 +54,11 @@ Kategorie sprzetu (`categories`) aplikacja **automatycznie** wypelni
 domyslnym zestawem przy pierwszym logowaniu konta z rola `admin`, jesli
 kolekcja jest pusta (patrz `app.dart` i
 `CategoryRepository.seedDefaultsIfEmpty()`). Pomieszczenia (`locations`)
-trzeba dodac recznie (ekran slownikow jest w planie na Faze 2-4) - bez
-tego formularz dodawania sprzetu nie bedzie mial czego zaproponowac w polu
-"Pomieszczenie". Najszybciej: dodaj chocby jeden dokument recznie w
-konsoli Firebase, kolekcja `locations`, pole `name` (np. "Sala 12").
+trzeba dodac recznie - **ale juz nie przez konsole Firebase**: w appce,
+z listy sprzetu, menu (trzy kropki) -> "Slowniki" -> zakladka
+"Pomieszczenia" -> przycisk "+". Bez chociaz jednego pomieszczenia
+formularz dodawania sprzetu nie bedzie mial czego zaproponowac w polu
+"Pomieszczenie".
 
 ## Uruchomienie
 
@@ -95,8 +96,9 @@ firestore.indexes.json   # indeksy zlozone pod filtrowanie
 - ✅ Import CSV/Excel z mapowaniem kolumn (obsluguje wiele arkuszy, dowolny wiersz naglowka,
   dopasowanie kategorii/pomieszczen, wykrywanie duplikatow/konfliktow wzgledem bazy i wewnatrz pliku)
 - ✅ Generowanie i druk etykiet QR (arkusz PDF, wybor sprzetu do druku lub pojedyncza etykieta ze szczegolow)
-- ⏳ Ekran "do uzupelnienia" i scalanie duplikatow
-- ⏳ Slowniki kategorii/pomieszczen (CRUD w UI)
+- ✅ Filtr "niekompletne" na liscie sprzetu (odpowiednik ekranu "do uzupelnienia")
+- ✅ Slowniki kategorii/pomieszczen (CRUD w UI - dodawanie/edycja/usuwanie, bez konsoli Firebase)
+- ⏳ Scalanie duplikatow
 - ⏳ Role uzytkownikow w UI (admin/editor/viewer) i dashboard
 
 ## Import danych z Vulcan (Inwentarz Optivum)
