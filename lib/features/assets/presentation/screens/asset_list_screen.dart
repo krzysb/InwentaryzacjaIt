@@ -39,7 +39,9 @@ class AssetListScreen extends ConsumerWidget {
             child: assetsAsync.when(
               data: (assets) {
                 if (assets.isEmpty) {
-                  return const Center(child: Text('Brak sprzetu spelniajacego kryteria.'));
+                  return const Center(
+                    child: Text('Brak sprzetu spelniajacego kryteria.'),
+                  );
                 }
                 final categories = categoriesAsync.value ?? [];
                 final locations = locationsAsync.value ?? [];
@@ -57,7 +59,8 @@ class AssetListScreen extends ConsumerWidget {
                 );
               },
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, _) => Center(child: Text('Blad wczytywania: $error')),
+              error: (error, _) =>
+                  Center(child: Text('Blad wczytywania: $error')),
             ),
           ),
         ],

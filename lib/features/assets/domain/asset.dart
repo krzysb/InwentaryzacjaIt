@@ -98,9 +98,13 @@ class Asset {
       'vulcanNumber': vulcanNumber,
       'locationId': locationId,
       'status': status.name,
-      'purchaseDate': purchaseDate == null ? null : Timestamp.fromDate(purchaseDate!),
+      'purchaseDate': purchaseDate == null
+          ? null
+          : Timestamp.fromDate(purchaseDate!),
       'purchasePrice': purchasePrice,
-      'warrantyUntil': warrantyUntil == null ? null : Timestamp.fromDate(warrantyUntil!),
+      'warrantyUntil': warrantyUntil == null
+          ? null
+          : Timestamp.fromDate(warrantyUntil!),
       'photoUrls': photoUrls,
       'notes': notes,
       'isIncomplete': computeIsIncomplete(

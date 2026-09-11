@@ -11,16 +11,16 @@ enum ImportField {
   notes;
 
   String get label => switch (this) {
-        ImportField.skip => 'Pomin kolumne',
-        ImportField.name => 'Nazwa / model',
-        ImportField.manufacturer => 'Producent',
-        ImportField.model => 'Model (dopisany do nazwy)',
-        ImportField.serialNumber => 'Numer seryjny',
-        ImportField.vulcanNumber => 'Numer z ewidencji Vulcan',
-        ImportField.category => 'Kategoria',
-        ImportField.location => 'Pomieszczenie',
-        ImportField.notes => 'Notatki',
-      };
+    ImportField.skip => 'Pomin kolumne',
+    ImportField.name => 'Nazwa / model',
+    ImportField.manufacturer => 'Producent',
+    ImportField.model => 'Model (dopisany do nazwy)',
+    ImportField.serialNumber => 'Numer seryjny',
+    ImportField.vulcanNumber => 'Numer z ewidencji Vulcan',
+    ImportField.category => 'Kategoria',
+    ImportField.location => 'Pomieszczenie',
+    ImportField.notes => 'Notatki',
+  };
 }
 
 /// Wynik parsowania pliku (CSV lub jeden arkusz XLSX) do prostej siatki
@@ -40,7 +40,10 @@ class ColumnMapping {
   final int headerRowIndex;
   final Map<int, ImportField> columnToField;
 
-  const ColumnMapping({required this.headerRowIndex, required this.columnToField});
+  const ColumnMapping({
+    required this.headerRowIndex,
+    required this.columnToField,
+  });
 }
 
 enum ImportRowStatus { newRecord, duplicateExact, conflict, invalid }
@@ -76,5 +79,9 @@ class ImportSummary {
   final int skipped;
   final int failed;
 
-  const ImportSummary({required this.added, required this.skipped, required this.failed});
+  const ImportSummary({
+    required this.added,
+    required this.skipped,
+    required this.failed,
+  });
 }

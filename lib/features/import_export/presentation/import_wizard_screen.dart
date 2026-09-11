@@ -81,7 +81,9 @@ class _ImportWizardScreenState extends ConsumerState<ImportWizardScreen> {
       if (_rawRows.isNotEmpty) {
         setState(() => _step = _WizardStep.mapColumns);
       } else {
-        setState(() => _error = 'Plik jest pusty albo nie udalo sie go odczytac.');
+        setState(
+          () => _error = 'Plik jest pusty albo nie udalo sie go odczytac.',
+        );
       }
     } finally {
       setState(() => _busy = false);
@@ -116,15 +118,22 @@ class _ImportWizardScreenState extends ConsumerState<ImportWizardScreen> {
       final existingVulcan = await repo.existingVulcanNumbers();
       final results = classifyRows(
         rows: _rawRows,
-        mapping: ColumnMapping(headerRowIndex: _headerRowIndex, columnToField: _columnMapping),
+        mapping: ColumnMapping(
+          headerRowIndex: _headerRowIndex,
+          columnToField: _columnMapping,
+        ),
         existingSerialNumbers: existingSerials,
         existingVulcanNumbers: existingVulcan,
       );
       _categoryValueMap.clear();
       _locationValueMap.clear();
       for (final r in results) {
-        if (r.categoryRaw.isNotEmpty) _categoryValueMap.putIfAbsent(r.categoryRaw, () => null);
-        if (r.locationRaw.isNotEmpty) _locationValueMap.putIfAbsent(r.locationRaw, () => null);
+        if (r.categoryRaw.isNotEmpty) {
+          _categoryValueMap.putIfAbsent(r.categoryRaw, () => null);
+        }
+        if (r.locationRaw.isNotEmpty) {
+          _locationValueMap.putIfAbsent(r.locationRaw, () => null);
+        }
       }
       setState(() {
         _classified = results;
@@ -153,11 +162,13 @@ class _ImportWizardScreenState extends ConsumerState<ImportWizardScreen> {
           resolvedCategoryIds[entry.key] = entry.value!;
         } else {
           final id = _slugify(entry.key);
-          await categoryRepo.upsertCategory(Category(
-            id: id,
-            name: entry.key,
-            sortOrder: existingCategories.length + resolvedCategoryIds.length,
-          ));
+          await categoryRepo.upsertCategory(
+            Category(
+              id: id,
+              name: entry.key,
+              sortOrder: existingCategories.length + resolvedCategoryIds.length,
+            ),
+          );
           resolvedCategoryIds[entry.key] = id;
         }
       }
@@ -167,7 +178,9 @@ class _ImportWizardScreenState extends ConsumerState<ImportWizardScreen> {
         if (entry.value != null) {
           resolvedLocationIds[entry.key] = entry.value!;
         } else {
-          final id = await locationRepo.upsertLocation(Location(id: '', name: entry.key));
+          final id = await locationRepo.upsertLocation(
+            Location(id: '', name: entry.key),
+          );
           resolvedLocationIds[entry.key] = id;
         }
       }
@@ -180,23 +193,29 @@ class _ImportWizardScreenState extends ConsumerState<ImportWizardScreen> {
           skipped++;
           continue;
         }
-        final categoryId = row.categoryRaw.isEmpty ? 'inne' : resolvedCategoryIds[row.categoryRaw] ?? 'inne';
-        final locationId = row.locationRaw.isEmpty ? '' : (resolvedLocationIds[row.locationRaw] ?? '');
-        toCreate.add(Asset(
-          id: '',
-          assetTag: _generateAssetTag(),
-          categoryId: categoryId,
-          name: row.name,
-          manufacturer: row.values[ImportField.manufacturer],
-          serialNumber: row.serialNumber.isEmpty ? null : row.serialNumber,
-          vulcanNumber: row.vulcanNumber.isEmpty ? null : row.vulcanNumber,
-          locationId: locationId,
-          notes: row.values[ImportField.notes] ?? '',
-          createdAt: now,
-          updatedAt: now,
-          createdBy: 'import',
-          updatedBy: 'import',
-        ));
+        final categoryId = row.categoryRaw.isEmpty
+            ? 'inne'
+            : resolvedCategoryIds[row.categoryRaw] ?? 'inne';
+        final locationId = row.locationRaw.isEmpty
+            ? ''
+            : (resolvedLocationIds[row.locationRaw] ?? '');
+        toCreate.add(
+          Asset(
+            id: '',
+            assetTag: _generateAssetTag(),
+            categoryId: categoryId,
+            name: row.name,
+            manufacturer: row.values[ImportField.manufacturer],
+            serialNumber: row.serialNumber.isEmpty ? null : row.serialNumber,
+            vulcanNumber: row.vulcanNumber.isEmpty ? null : row.vulcanNumber,
+            locationId: locationId,
+            notes: row.values[ImportField.notes] ?? '',
+            createdAt: now,
+            updatedAt: now,
+            createdBy: 'import',
+            updatedBy: 'import',
+          ),
+        );
       }
 
       final repo = ref.read(importRepositoryProvider);
@@ -225,14 +244,20 @@ class _ImportWizardScreenState extends ConsumerState<ImportWizardScreen> {
       final idx = from.indexOf(ch);
       return idx >= 0 ? to[idx] : ch;
     }).join();
-    out = out.replaceAll(RegExp(r'[^a-z0-9\-]'), '-').replaceAll(RegExp(r'-+'), '-');
-    return out.isEmpty ? 'kategoria-${DateTime.now().millisecondsSinceEpoch}' : out;
+    out = out
+        .replaceAll(RegExp(r'[^a-z0-9\-]'), '-')
+        .replaceAll(RegExp(r'-+'), '-');
+    return out.isEmpty
+        ? 'kategoria-${DateTime.now().millisecondsSinceEpoch}'
+        : out;
   }
 
   int _tagCounter = 0;
   String _generateAssetTag() {
     _tagCounter++;
-    return 'IMP${DateTime.now().millisecondsSinceEpoch}$_tagCounter'.substring(0, 12).toUpperCase();
+    return 'IMP${DateTime.now().millisecondsSinceEpoch}$_tagCounter'
+        .substring(0, 12)
+        .toUpperCase();
   }
 
   @override
@@ -249,7 +274,12 @@ class _ImportWizardScreenState extends ConsumerState<ImportWizardScreen> {
                   if (_error != null)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 12),
-                      child: Text(_error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+                      child: Text(
+                        _error!,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                      ),
                     ),
                   Expanded(child: _buildStepBody()),
                 ],
@@ -283,7 +313,8 @@ class _ImportWizardScreenState extends ConsumerState<ImportWizardScreen> {
             _columnMapping = {};
           }),
           columnMapping: _columnMapping,
-          onMappingChanged: (col, field) => setState(() => _columnMapping[col] = field),
+          onMappingChanged: (col, field) =>
+              setState(() => _columnMapping[col] = field),
           onNext: _runClassification,
         );
       case _WizardStep.review:
@@ -291,8 +322,10 @@ class _ImportWizardScreenState extends ConsumerState<ImportWizardScreen> {
           results: _classified,
           categoryValueMap: _categoryValueMap,
           locationValueMap: _locationValueMap,
-          onCategoryMapped: (raw, id) => setState(() => _categoryValueMap[raw] = id),
-          onLocationMapped: (raw, id) => setState(() => _locationValueMap[raw] = id),
+          onCategoryMapped: (raw, id) =>
+              setState(() => _categoryValueMap[raw] = id),
+          onLocationMapped: (raw, id) =>
+              setState(() => _locationValueMap[raw] = id),
           onToggleRow: (row) => setState(() => row.include = !row.include),
           onConfirm: _commit,
         );
@@ -315,7 +348,9 @@ class _PickFileStep extends StatelessWidget {
         children: [
           const Icon(Icons.upload_file, size: 64),
           const SizedBox(height: 16),
-          const Text('Wybierz plik CSV lub XLSX z eksportem sprzetu\n(np. z Inwentarza Optivum/Vulcan albo listy dostawy).'),
+          const Text(
+            'Wybierz plik CSV lub XLSX z eksportem sprzetu\n(np. z Inwentarza Optivum/Vulcan albo listy dostawy).',
+          ),
           const SizedBox(height: 24),
           FilledButton.icon(
             onPressed: onPick,
@@ -370,25 +405,38 @@ class _MapColumnsStep extends StatelessWidget {
           DropdownButtonFormField<String>(
             initialValue: selectedSheet,
             decoration: const InputDecoration(labelText: 'Arkusz'),
-            items: sheetNames.map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+            items: sheetNames
+                .map((s) => DropdownMenuItem(value: s, child: Text(s)))
+                .toList(),
             onChanged: (s) {
               if (s != null) onSheetChanged(s);
             },
           ),
         ],
         const SizedBox(height: 12),
-        Text('Ktory wiersz jest naglowkiem kolumn?', style: Theme.of(context).textTheme.bodyMedium),
+        Text(
+          'Ktory wiersz jest naglowkiem kolumn?',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
         DropdownButtonFormField<int>(
           initialValue: headerRowIndex,
           items: List.generate(previewRowsCount, (i) => i)
-              .map((i) => DropdownMenuItem(value: i, child: Text('Wiersz ${i + 1}: ${rawRows[i].join(' | ')}')))
+              .map(
+                (i) => DropdownMenuItem(
+                  value: i,
+                  child: Text('Wiersz ${i + 1}: ${rawRows[i].join(' | ')}'),
+                ),
+              )
               .toList(),
           onChanged: (i) {
             if (i != null) onHeaderRowChanged(i);
           },
         ),
         const SizedBox(height: 16),
-        Text('Mapowanie kolumn', style: Theme.of(context).textTheme.titleMedium),
+        Text(
+          'Mapowanie kolumn',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         const SizedBox(height: 8),
         for (var col = 0; col < columnCount; col++)
           Padding(
@@ -410,7 +458,10 @@ class _MapColumnsStep extends StatelessWidget {
                     initialValue: columnMapping[col] ?? ImportField.skip,
                     isDense: true,
                     items: ImportField.values
-                        .map((f) => DropdownMenuItem(value: f, child: Text(f.label)))
+                        .map(
+                          (f) =>
+                              DropdownMenuItem(value: f, child: Text(f.label)),
+                        )
                         .toList(),
                     onChanged: (f) {
                       if (f != null) onMappingChanged(col, f);
@@ -421,7 +472,10 @@ class _MapColumnsStep extends StatelessWidget {
             ),
           ),
         const SizedBox(height: 24),
-        FilledButton(onPressed: onNext, child: const Text('Dalej: sprawdz dane')),
+        FilledButton(
+          onPressed: onNext,
+          child: const Text('Dalej: sprawdz dane'),
+        ),
       ],
     );
   }
@@ -458,19 +512,35 @@ class _ReviewStep extends ConsumerWidget {
 
     return ListView(
       children: [
-        Text('Znaleziono ${results.length} wierszy', style: Theme.of(context).textTheme.titleMedium),
+        Text(
+          'Znaleziono ${results.length} wierszy',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         Wrap(
           spacing: 8,
           children: [
-            Chip(label: Text('Nowe: ${counts[ImportRowStatus.newRecord] ?? 0}')),
-            Chip(label: Text('Duplikaty: ${counts[ImportRowStatus.duplicateExact] ?? 0}')),
-            Chip(label: Text('Konflikty: ${counts[ImportRowStatus.conflict] ?? 0}')),
+            Chip(
+              label: Text('Nowe: ${counts[ImportRowStatus.newRecord] ?? 0}'),
+            ),
+            Chip(
+              label: Text(
+                'Duplikaty: ${counts[ImportRowStatus.duplicateExact] ?? 0}',
+              ),
+            ),
+            Chip(
+              label: Text(
+                'Konflikty: ${counts[ImportRowStatus.conflict] ?? 0}',
+              ),
+            ),
             Chip(label: Text('Bledy: ${counts[ImportRowStatus.invalid] ?? 0}')),
           ],
         ),
         if (categoryValueMap.isNotEmpty) ...[
           const SizedBox(height: 16),
-          Text('Dopasuj kategorie', style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            'Dopasuj kategorie',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           for (final raw in categoryValueMap.keys)
             _ValueMappingRow(
               raw: raw,
@@ -481,7 +551,10 @@ class _ReviewStep extends ConsumerWidget {
         ],
         if (locationValueMap.isNotEmpty) ...[
           const SizedBox(height: 16),
-          Text('Dopasuj pomieszczenia', style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            'Dopasuj pomieszczenia',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           for (final raw in locationValueMap.keys)
             _ValueMappingRow(
               raw: raw,
@@ -491,27 +564,37 @@ class _ReviewStep extends ConsumerWidget {
             ),
         ],
         const SizedBox(height: 16),
-        Text('Wiersze (odznacz, zeby pominac)', style: Theme.of(context).textTheme.titleMedium),
+        Text(
+          'Wiersze (odznacz, zeby pominac)',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         for (final row in results)
           CheckboxListTile(
             dense: true,
             value: row.include,
             onChanged: (_) => onToggleRow(row),
-            title: Text('${row.name.isEmpty ? '(brak nazwy)' : row.name} — ${row.serialNumber}'),
-            subtitle: Text('${_statusLabel(row.status)}${row.issue != null ? ': ${row.issue}' : ''}'),
+            title: Text(
+              '${row.name.isEmpty ? '(brak nazwy)' : row.name} — ${row.serialNumber}',
+            ),
+            subtitle: Text(
+              '${_statusLabel(row.status)}${row.issue != null ? ': ${row.issue}' : ''}',
+            ),
           ),
         const SizedBox(height: 24),
-        FilledButton(onPressed: onConfirm, child: const Text('Importuj zaznaczone')),
+        FilledButton(
+          onPressed: onConfirm,
+          child: const Text('Importuj zaznaczone'),
+        ),
       ],
     );
   }
 
   String _statusLabel(ImportRowStatus status) => switch (status) {
-        ImportRowStatus.newRecord => 'Nowy',
-        ImportRowStatus.duplicateExact => 'Duplikat',
-        ImportRowStatus.conflict => 'Konflikt',
-        ImportRowStatus.invalid => 'Blad',
-      };
+    ImportRowStatus.newRecord => 'Nowy',
+    ImportRowStatus.duplicateExact => 'Duplikat',
+    ImportRowStatus.conflict => 'Konflikt',
+    ImportRowStatus.invalid => 'Blad',
+  };
 }
 
 class _ValueMappingRow extends StatelessWidget {
@@ -540,8 +623,16 @@ class _ValueMappingRow extends StatelessWidget {
               initialValue: selected,
               isDense: true,
               items: [
-                const DropdownMenuItem<String?>(value: null, child: Text('Utworz nowe')),
-                ...options.entries.map((e) => DropdownMenuItem<String?>(value: e.key, child: Text(e.value))),
+                const DropdownMenuItem<String?>(
+                  value: null,
+                  child: Text('Utworz nowe'),
+                ),
+                ...options.entries.map(
+                  (e) => DropdownMenuItem<String?>(
+                    value: e.key,
+                    child: Text(e.value),
+                  ),
+                ),
               ],
               onChanged: onChanged,
             ),
@@ -572,7 +663,10 @@ class _DoneStep extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
-          FilledButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Zakoncz')),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Zakoncz'),
+          ),
         ],
       ),
     );

@@ -32,7 +32,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       _error = null;
     });
     try {
-      await ref.read(authRepositoryProvider).signInWithEmail(
+      await ref
+          .read(authRepositoryProvider)
+          .signInWithEmail(
             _emailController.text.trim(),
             _passwordController.text,
           );
@@ -58,24 +60,34 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 children: [
                   const Icon(Icons.inventory_2_outlined, size: 64),
                   const SizedBox(height: 16),
-                  Text('Inwentaryzacja IT', style: Theme.of(context).textTheme.headlineSmall),
+                  Text(
+                    'Inwentaryzacja IT',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
                   const SizedBox(height: 24),
                   TextFormField(
                     controller: _emailController,
                     decoration: const InputDecoration(labelText: 'E-mail'),
                     keyboardType: TextInputType.emailAddress,
-                    validator: (v) => (v == null || v.isEmpty) ? 'Podaj e-mail' : null,
+                    validator: (v) =>
+                        (v == null || v.isEmpty) ? 'Podaj e-mail' : null,
                   ),
                   const SizedBox(height: 12),
                   TextFormField(
                     controller: _passwordController,
                     decoration: const InputDecoration(labelText: 'Haslo'),
                     obscureText: true,
-                    validator: (v) => (v == null || v.isEmpty) ? 'Podaj haslo' : null,
+                    validator: (v) =>
+                        (v == null || v.isEmpty) ? 'Podaj haslo' : null,
                   ),
                   if (_error != null) ...[
                     const SizedBox(height: 12),
-                    Text(_error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+                    Text(
+                      _error!,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                    ),
                   ],
                   const SizedBox(height: 24),
                   SizedBox(

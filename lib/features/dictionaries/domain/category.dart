@@ -24,23 +24,48 @@ class Category {
   }
 
   Map<String, dynamic> toFirestore() => {
-        'name': name,
-        'icon': icon,
-        'sortOrder': sortOrder,
-      };
+    'name': name,
+    'icon': icon,
+    'sortOrder': sortOrder,
+  };
 
   /// Domyslny zestaw kategorii typowego sprzetu IT w szkole - startowy seed,
   /// gdy kolekcja `categories` jest jeszcze pusta.
   static const List<Category> defaultSeed = [
-    Category(id: 'komputer-stacjonarny', name: 'Komputer stacjonarny', icon: 'computer', sortOrder: 0),
+    Category(
+      id: 'komputer-stacjonarny',
+      name: 'Komputer stacjonarny',
+      icon: 'computer',
+      sortOrder: 0,
+    ),
     Category(id: 'laptop', name: 'Laptop', icon: 'laptop', sortOrder: 1),
     Category(id: 'monitor', name: 'Monitor', icon: 'monitor', sortOrder: 2),
-    Category(id: 'projektor', name: 'Projektor', icon: 'videocam', sortOrder: 3),
+    Category(
+      id: 'projektor',
+      name: 'Projektor',
+      icon: 'videocam',
+      sortOrder: 3,
+    ),
     Category(id: 'drukarka', name: 'Drukarka', icon: 'print', sortOrder: 4),
-    Category(id: 'switch', name: 'Switch / router', icon: 'router', sortOrder: 5),
-    Category(id: 'ups', name: 'UPS', icon: 'battery_charging_full', sortOrder: 6),
+    Category(
+      id: 'switch',
+      name: 'Switch / router',
+      icon: 'router',
+      sortOrder: 5,
+    ),
+    Category(
+      id: 'ups',
+      name: 'UPS',
+      icon: 'battery_charging_full',
+      sortOrder: 6,
+    ),
     Category(id: 'tablet', name: 'Tablet', icon: 'tablet', sortOrder: 7),
-    Category(id: 'tablica-interaktywna', name: 'Tablica interaktywna', icon: 'dashboard', sortOrder: 8),
+    Category(
+      id: 'tablica-interaktywna',
+      name: 'Tablica interaktywna',
+      icon: 'dashboard',
+      sortOrder: 8,
+    ),
     Category(id: 'inne', name: 'Inne', icon: 'category', sortOrder: 99),
   ];
 }

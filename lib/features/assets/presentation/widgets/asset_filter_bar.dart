@@ -27,7 +27,8 @@ class AssetFilterBar extends ConsumerWidget {
               isDense: true,
               border: OutlineInputBorder(),
             ),
-            onChanged: (value) => ref.read(assetFilterProvider.notifier).setSearchText(value),
+            onChanged: (value) =>
+                ref.read(assetFilterProvider.notifier).setSearchText(value),
           ),
           const SizedBox(height: 8),
           SingleChildScrollView(
@@ -39,7 +40,8 @@ class AssetFilterBar extends ConsumerWidget {
                     label: 'Kategoria',
                     value: filter.categoryId,
                     items: {for (final c in categories) c.id: c.name},
-                    onChanged: (v) => ref.read(assetFilterProvider.notifier).setCategory(v),
+                    onChanged: (v) =>
+                        ref.read(assetFilterProvider.notifier).setCategory(v),
                   ),
                   loading: () => const SizedBox.shrink(),
                   error: (_, __) => const SizedBox.shrink(),
@@ -50,7 +52,8 @@ class AssetFilterBar extends ConsumerWidget {
                     label: 'Pomieszczenie',
                     value: filter.locationId,
                     items: {for (final l in locations) l.id: l.displayName},
-                    onChanged: (v) => ref.read(assetFilterProvider.notifier).setLocation(v),
+                    onChanged: (v) =>
+                        ref.read(assetFilterProvider.notifier).setLocation(v),
                   ),
                   loading: () => const SizedBox.shrink(),
                   error: (_, __) => const SizedBox.shrink(),
@@ -59,7 +62,9 @@ class AssetFilterBar extends ConsumerWidget {
                 FilterChip(
                   label: const Text('Niekompletne'),
                   selected: filter.onlyIncomplete,
-                  onSelected: (v) => ref.read(assetFilterProvider.notifier).setOnlyIncomplete(v),
+                  onSelected: (v) => ref
+                      .read(assetFilterProvider.notifier)
+                      .setOnlyIncomplete(v),
                 ),
               ],
             ),
@@ -92,7 +97,9 @@ class _DropdownChip<T> extends StatelessWidget {
       onSelected: onChanged,
       dropdownMenuEntries: [
         const DropdownMenuEntry(value: null, label: 'Wszystkie'),
-        ...items.entries.map((e) => DropdownMenuEntry(value: e.key, label: e.value)),
+        ...items.entries.map(
+          (e) => DropdownMenuEntry(value: e.key, label: e.value),
+        ),
       ],
     );
   }

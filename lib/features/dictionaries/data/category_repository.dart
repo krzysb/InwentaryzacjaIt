@@ -5,14 +5,17 @@ import '../domain/category.dart';
 class CategoryRepository {
   final FirebaseFirestore _firestore;
 
-  CategoryRepository({FirebaseFirestore? firestore}) : _firestore = firestore ?? FirebaseFirestore.instance;
+  CategoryRepository({FirebaseFirestore? firestore})
+    : _firestore = firestore ?? FirebaseFirestore.instance;
 
-  CollectionReference<Map<String, dynamic>> get _categories => _firestore.collection('categories');
+  CollectionReference<Map<String, dynamic>> get _categories =>
+      _firestore.collection('categories');
 
   Stream<List<Category>> watchCategories() {
-    return _categories.orderBy('sortOrder').snapshots().map(
-          (snapshot) => snapshot.docs.map(Category.fromFirestore).toList(),
-        );
+    return _categories
+        .orderBy('sortOrder')
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map(Category.fromFirestore).toList());
   }
 
   Future<void> upsertCategory(Category category) async {

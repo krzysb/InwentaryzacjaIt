@@ -8,8 +8,8 @@ class AuthRepository {
   final FirebaseFirestore _firestore;
 
   AuthRepository({FirebaseAuth? auth, FirebaseFirestore? firestore})
-      : _auth = auth ?? FirebaseAuth.instance,
-        _firestore = firestore ?? FirebaseFirestore.instance;
+    : _auth = auth ?? FirebaseAuth.instance,
+      _firestore = firestore ?? FirebaseFirestore.instance;
 
   Stream<User?> authStateChanges() => _auth.authStateChanges();
 
@@ -24,8 +24,10 @@ class AuthRepository {
   /// Profil (rola) uzytkownika trzymany osobno w kolekcji `users` - konta
   /// zaklada admin recznie w konsoli Firebase, wiec brak tu rejestracji.
   Stream<AppUser?> watchAppUser(String uid) {
-    return _firestore.collection('users').doc(uid).snapshots().map(
-          (doc) => doc.exists ? AppUser.fromFirestore(doc) : null,
-        );
+    return _firestore
+        .collection('users')
+        .doc(uid)
+        .snapshots()
+        .map((doc) => doc.exists ? AppUser.fromFirestore(doc) : null);
   }
 }

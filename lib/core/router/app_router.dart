@@ -26,24 +26,41 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     refreshListenable: _AuthRefreshNotifier(ref),
     routes: [
       GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
-      GoRoute(path: '/assets', builder: (context, state) => const AssetListScreen()),
-      GoRoute(path: '/assets/new', builder: (context, state) => const AssetFormScreen()),
+      GoRoute(
+        path: '/assets',
+        builder: (context, state) => const AssetListScreen(),
+      ),
+      GoRoute(
+        path: '/assets/new',
+        builder: (context, state) => const AssetFormScreen(),
+      ),
       GoRoute(
         path: '/assets/:id',
-        builder: (context, state) => AssetDetailScreen(assetId: state.pathParameters['id']!),
+        builder: (context, state) =>
+            AssetDetailScreen(assetId: state.pathParameters['id']!),
       ),
       GoRoute(
         path: '/assets/:id/edit',
-        builder: (context, state) => AssetFormScreen(assetId: state.pathParameters['id']!),
+        builder: (context, state) =>
+            AssetFormScreen(assetId: state.pathParameters['id']!),
       ),
-      GoRoute(path: '/scan-find', builder: (context, state) => const FindAssetScannerScreen()),
-      GoRoute(path: '/import', builder: (context, state) => const ImportWizardScreen()),
+      GoRoute(
+        path: '/scan-find',
+        builder: (context, state) => const FindAssetScannerScreen(),
+      ),
+      GoRoute(
+        path: '/import',
+        builder: (context, state) => const ImportWizardScreen(),
+      ),
     ],
   );
 });
 
 class _AuthRefreshNotifier extends ChangeNotifier {
   _AuthRefreshNotifier(Ref ref) {
-    ref.listen<AsyncValue<User?>>(authStateProvider, (_, __) => notifyListeners());
+    ref.listen<AsyncValue<User?>>(
+      authStateProvider,
+      (_, __) => notifyListeners(),
+    );
   }
 }

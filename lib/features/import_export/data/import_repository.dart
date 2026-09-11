@@ -6,7 +6,8 @@ import '../domain/import_models.dart';
 class ImportRepository {
   final FirebaseFirestore _firestore;
 
-  ImportRepository({FirebaseFirestore? firestore}) : _firestore = firestore ?? FirebaseFirestore.instance;
+  ImportRepository({FirebaseFirestore? firestore})
+    : _firestore = firestore ?? FirebaseFirestore.instance;
 
   Future<Set<String>> existingSerialNumbers() async {
     final snapshot = await _firestore.collection('assets').get();
@@ -43,7 +44,9 @@ class ImportRepository {
     for (var start = 0; start < assetsToCreate.length; start += chunkSize) {
       final chunk = assetsToCreate.sublist(
         start,
-        start + chunkSize > assetsToCreate.length ? assetsToCreate.length : start + chunkSize,
+        start + chunkSize > assetsToCreate.length
+            ? assetsToCreate.length
+            : start + chunkSize,
       );
       final batch = _firestore.batch();
       for (final asset in chunk) {

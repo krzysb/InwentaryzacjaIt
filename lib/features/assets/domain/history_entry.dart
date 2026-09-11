@@ -21,7 +21,9 @@ class HistoryEntry {
     this.note,
   });
 
-  factory HistoryEntry.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
+  factory HistoryEntry.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> doc,
+  ) {
     final data = doc.data()!;
     return HistoryEntry(
       id: doc.id,
@@ -38,11 +40,11 @@ class HistoryEntry {
   }
 
   Map<String, dynamic> toFirestore() => {
-        'type': type.name,
-        'fromValue': fromValue,
-        'toValue': toValue,
-        'changedAt': Timestamp.fromDate(changedAt),
-        'changedBy': changedBy,
-        'note': note,
-      };
+    'type': type.name,
+    'fromValue': fromValue,
+    'toValue': toValue,
+    'changedAt': Timestamp.fromDate(changedAt),
+    'changedBy': changedBy,
+    'note': note,
+  };
 }

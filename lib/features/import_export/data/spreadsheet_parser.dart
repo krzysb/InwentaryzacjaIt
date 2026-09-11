@@ -20,8 +20,12 @@ class SpreadsheetParser {
     if (text.isNotEmpty && text.codeUnitAt(0) == 0xFEFF) {
       text = text.substring(1);
     }
-    final rows = const CsvToListConverter(shouldParseNumbers: false).convert(text);
-    return rows.map((row) => row.map((cell) => cell.toString()).toList()).toList();
+    final rows = const CsvToListConverter(
+      shouldParseNumbers: false,
+    ).convert(text);
+    return rows
+        .map((row) => row.map((cell) => cell.toString()).toList())
+        .toList();
   }
 
   /// Zwraca nazwy arkuszy w pliku XLSX (do wyboru przez uzytkownika, gdy

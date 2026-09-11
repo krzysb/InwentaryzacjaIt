@@ -64,12 +64,14 @@ List<ImportRowResult> classifyRows({
 
     if (serial.isNotEmpty) seenInFileSerials.add(serial);
 
-    results.add(ImportRowResult(
-      sourceRowIndex: i,
-      values: values,
-      status: status,
-      issue: issue,
-    ));
+    results.add(
+      ImportRowResult(
+        sourceRowIndex: i,
+        values: values,
+        status: status,
+        issue: issue,
+      ),
+    );
   }
 
   return results;

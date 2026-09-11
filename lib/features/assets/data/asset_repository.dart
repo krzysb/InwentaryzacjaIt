@@ -47,9 +47,11 @@ class AssetFilter {
 class AssetRepository {
   final FirebaseFirestore _firestore;
 
-  AssetRepository({FirebaseFirestore? firestore}) : _firestore = firestore ?? FirebaseFirestore.instance;
+  AssetRepository({FirebaseFirestore? firestore})
+    : _firestore = firestore ?? FirebaseFirestore.instance;
 
-  CollectionReference<Map<String, dynamic>> get _assets => _firestore.collection('assets');
+  CollectionReference<Map<String, dynamic>> get _assets =>
+      _firestore.collection('assets');
 
   Stream<List<Asset>> watchAssets(AssetFilter filter) {
     Query<Map<String, dynamic>> query = _assets;
@@ -83,17 +85,26 @@ class AssetRepository {
   }
 
   Stream<Asset?> watchAsset(String id) {
-    return _assets.doc(id).snapshots().map((doc) => doc.exists ? Asset.fromFirestore(doc) : null);
+    return _assets
+        .doc(id)
+        .snapshots()
+        .map((doc) => doc.exists ? Asset.fromFirestore(doc) : null);
   }
 
   Future<Asset?> findBySerialNumber(String serialNumber) async {
-    final snapshot = await _assets.where('serialNumber', isEqualTo: serialNumber).limit(1).get();
+    final snapshot = await _assets
+        .where('serialNumber', isEqualTo: serialNumber)
+        .limit(1)
+        .get();
     if (snapshot.docs.isEmpty) return null;
     return Asset.fromFirestore(snapshot.docs.first);
   }
 
   Future<Asset?> findByAssetTag(String assetTag) async {
-    final snapshot = await _assets.where('assetTag', isEqualTo: assetTag).limit(1).get();
+    final snapshot = await _assets
+        .where('assetTag', isEqualTo: assetTag)
+        .limit(1)
+        .get();
     if (snapshot.docs.isEmpty) return null;
     return Asset.fromFirestore(snapshot.docs.first);
   }
@@ -142,7 +153,9 @@ class AssetRepository {
         .collection('history')
         .orderBy('changedAt', descending: true)
         .snapshots()
-        .map((snapshot) => snapshot.docs.map(HistoryEntry.fromFirestore).toList());
+        .map(
+          (snapshot) => snapshot.docs.map(HistoryEntry.fromFirestore).toList(),
+        );
   }
 
   Future<void> deleteAsset(String id) async {

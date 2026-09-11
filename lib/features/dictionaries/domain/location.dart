@@ -34,9 +34,9 @@ class Location {
   }
 
   Map<String, dynamic> toFirestore() => {
-        'name': name,
-        'building': building,
-        'floor': floor,
-        'type': type.name,
-      };
+    'name': name,
+    'building': building,
+    'floor': floor,
+    'type': type.name,
+  };
 }

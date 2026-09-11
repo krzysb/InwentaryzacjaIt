@@ -11,10 +11,12 @@ class FindAssetScannerScreen extends ConsumerStatefulWidget {
   const FindAssetScannerScreen({super.key});
 
   @override
-  ConsumerState<FindAssetScannerScreen> createState() => _FindAssetScannerScreenState();
+  ConsumerState<FindAssetScannerScreen> createState() =>
+      _FindAssetScannerScreenState();
 }
 
-class _FindAssetScannerScreenState extends ConsumerState<FindAssetScannerScreen> {
+class _FindAssetScannerScreenState
+    extends ConsumerState<FindAssetScannerScreen> {
   @override
   void initState() {
     super.initState();
@@ -24,7 +26,10 @@ class _FindAssetScannerScreenState extends ConsumerState<FindAssetScannerScreen>
   Future<void> _scan() async {
     final tag = await Navigator.of(context).push<String>(
       MaterialPageRoute(
-        builder: (_) => const ScannerScreen(mode: ScannerMode.findAsset, title: 'Znajdz sprzet'),
+        builder: (_) => const ScannerScreen(
+          mode: ScannerMode.findAsset,
+          title: 'Znajdz sprzet',
+        ),
       ),
     );
     if (!mounted) return;
