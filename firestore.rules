@@ -1,0 +1,64 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function userDoc() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function role() {
+      return isSignedIn() && userDoc().data.role is string ? userDoc().data.role : 'viewer';
+    }
+
+    function canEdit() {
+      return isSignedIn() && (role() == 'admin' || role() == 'editor');
+    }
+
+    function isAdmin() {
+      return isSignedIn() && role() == 'admin';
+    }
+
+    // Kazdy zalogowany uzytkownik (admin/editor/viewer) moze czytac cala
+    // baze sprzetu - to podstawowy warunek uzytecznosci aplikacji
+    // (sprawdzanie gdzie jest dany sprzet). Zapis wymaga roli editor/admin.
+    match /assets/{assetId} {
+      allow read: if isSignedIn();
+      allow create, update: if canEdit();
+      allow delete: if isAdmin();
+
+      match /history/{entryId} {
+        allow read: if isSignedIn();
+        allow create: if canEdit();
+        allow update, delete: if isAdmin();
+      }
+    }
+
+    match /categories/{categoryId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    match /locations/{locationId} {
+      allow read: if isSignedIn();
+      allow write: if canEdit();
+    }
+
+    match /importBatches/{batchId} {
+      allow read: if isSignedIn();
+      allow create: if canEdit();
+      allow update, delete: if isAdmin();
+    }
+
+    // Uzytkownik moze odczytac wlasny profil (rola); pelna liste
+    // uzytkownikow i zmiane rol widzi/robi tylko admin.
+    match /users/{uid} {
+      allow read: if isSignedIn() && (request.auth.uid == uid || isAdmin());
+      allow write: if isAdmin();
+    }
+  }
+}
