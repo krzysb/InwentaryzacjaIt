@@ -6,12 +6,12 @@ enum AssetStatus {
   zaginiony;
 
   String get label => switch (this) {
-        AssetStatus.sprawny => 'Sprawny',
-        AssetStatus.uszkodzony => 'Uszkodzony',
-        AssetStatus.wNaprawie => 'W naprawie',
-        AssetStatus.wycofany => 'Wycofany',
-        AssetStatus.zaginiony => 'Zaginiony',
-      };
+    AssetStatus.sprawny => 'Sprawny',
+    AssetStatus.uszkodzony => 'Uszkodzony',
+    AssetStatus.wNaprawie => 'W naprawie',
+    AssetStatus.wycofany => 'Wycofany',
+    AssetStatus.zaginiony => 'Zaginiony',
+  };
 
   static AssetStatus fromName(String? name) {
     return AssetStatus.values.firstWhere(

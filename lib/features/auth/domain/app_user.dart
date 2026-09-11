@@ -32,8 +32,8 @@ class AppUser {
   }
 
   Map<String, dynamic> toFirestore() => {
-        'displayName': displayName,
-        'email': email,
-        'role': role.name,
-      };
+    'displayName': displayName,
+    'email': email,
+    'role': role.name,
+  };
 }

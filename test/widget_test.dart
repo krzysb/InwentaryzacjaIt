@@ -5,11 +5,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:inwentaryzacja_it/features/auth/presentation/login_screen.dart';
 
 void main() {
-  testWidgets('Ekran logowania pokazuje pola e-mail i haslo', (WidgetTester tester) async {
+  testWidgets('Ekran logowania pokazuje pola e-mail i haslo', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(home: LoginScreen()),
-      ),
+      const ProviderScope(child: MaterialApp(home: LoginScreen())),
     );
 
     expect(find.text('Inwentaryzacja IT'), findsOneWidget);

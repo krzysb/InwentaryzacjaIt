@@ -50,12 +50,15 @@ jak jest. Trzeba go nadpisac prawdziwa konfiguracja:
    Bez tego dokumentu logowanie zadziala, ale aplikacja nie przypisze roli
    (domyslnie `viewer` - tylko odczyt).
 
-Kategorie sprzetu (`categories`) aplikacja sama wypelni domyslnym zestawem
-przy pierwszym uruchomieniu, jesli kolekcja jest pusta (patrz
-`CategoryRepository.seedDefaultsIfEmpty()` - wywolaj to raz recznie lub
-podepnij pod start aplikacji). Pomieszczenia (`locations`) trzeba dodac
-recznie (ekran slownikow jest w planie na Faze 2-4) lub bezposrednio w
-konsoli Firebase.
+Kategorie sprzetu (`categories`) aplikacja **automatycznie** wypelni
+domyslnym zestawem przy pierwszym logowaniu konta z rola `admin`, jesli
+kolekcja jest pusta (patrz `app.dart` i
+`CategoryRepository.seedDefaultsIfEmpty()`). Pomieszczenia (`locations`)
+trzeba dodac recznie - **ale juz nie przez konsole Firebase**: w appce,
+z listy sprzetu, menu (trzy kropki) -> "Slowniki" -> zakladka
+"Pomieszczenia" -> przycisk "+". Bez chociaz jednego pomieszczenia
+formularz dodawania sprzetu nie bedzie mial czego zaproponowac w polu
+"Pomieszczenie".
 
 ## Uruchomienie
 
@@ -90,11 +93,19 @@ firestore.indexes.json   # indeksy zlozone pod filtrowanie
 - ✅ Formularz dodaj/edytuj sprzet, ze skanowaniem numeru seryjnego
 - ✅ Skaner w trybie "znajdz sprzet" (skan wlasnego QR -> szczegoly)
 - ✅ Wykrywanie duplikatu po numerze seryjnym przy dodawaniu
-- ⏳ Generowanie i druk etykiet QR (PDF)
-- ⏳ Import CSV/Excel z mapowaniem kolumn (m.in. eksport z Inwentarza Optivum/Vulcan)
-- ⏳ Ekran "do uzupelnienia" i scalanie duplikatow
-- ⏳ Slowniki kategorii/pomieszczen (CRUD w UI)
-- ⏳ Role uzytkownikow w UI (admin/editor/viewer) i dashboard
+- ✅ Import CSV/Excel z mapowaniem kolumn (obsluguje wiele arkuszy, dowolny wiersz naglowka,
+  dopasowanie kategorii/pomieszczen, wykrywanie duplikatow/konfliktow wzgledem bazy i wewnatrz pliku)
+- ✅ Generowanie i druk etykiet QR (arkusz PDF, wybor sprzetu do druku lub pojedyncza etykieta ze szczegolow)
+- ✅ Filtr "niekompletne" na liscie sprzetu (odpowiednik ekranu "do uzupelnienia")
+- ✅ Slowniki kategorii/pomieszczen (CRUD w UI - dodawanie/edycja/usuwanie, bez konsoli Firebase)
+- ✅ Wykrywanie mozliwych duplikatow (po numerze seryjnym) i ekran scalania rekordow pole po polu
+- ✅ Dashboard ze statystykami (liczba sprzetu, niekompletne/wycofane, rozklad wg statusu/kategorii/pomieszczenia)
+- ✅ Zarzadzanie rolami uzytkownikow w UI (admin/editor/viewer) - dostepne tylko dla admina, w menu na liscie sprzetu
+
+Wszystkie punkty z pierwotnego planu (Faza 0-4) sa zrealizowane. Zakladanie
+nowych **kont** (nie rol) zostaje recznie w konsoli Firebase Authentication -
+SDK klienta nie moze utworzyc konta bez wylogowania biezacego admina, wiec to
+wymaga Admin SDK/Cloud Function, co wykracza poza MVP.
 
 ## Import danych z Vulcan (Inwentarz Optivum)
 

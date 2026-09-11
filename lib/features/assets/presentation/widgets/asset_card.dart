@@ -49,7 +49,8 @@ class AssetCard extends StatelessWidget {
           [
             category?.name ?? asset.categoryId,
             location?.displayName ?? asset.locationId,
-            if (asset.serialNumber != null && asset.serialNumber!.isNotEmpty) 'S/N: ${asset.serialNumber}',
+            if (asset.serialNumber != null && asset.serialNumber!.isNotEmpty)
+              'S/N: ${asset.serialNumber}',
           ].join(' • '),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -58,11 +59,18 @@ class AssetCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(asset.status.label, style: TextStyle(color: _statusColor(context), fontSize: 12)),
+            Text(
+              asset.status.label,
+              style: TextStyle(color: _statusColor(context), fontSize: 12),
+            ),
             if (asset.isIncomplete)
               const Padding(
                 padding: EdgeInsets.only(top: 4),
-                child: Icon(Icons.warning_amber_rounded, size: 16, color: Colors.amber),
+                child: Icon(
+                  Icons.warning_amber_rounded,
+                  size: 16,
+                  color: Colors.amber,
+                ),
               ),
           ],
         ),

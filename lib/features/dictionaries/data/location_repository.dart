@@ -5,14 +5,17 @@ import '../domain/location.dart';
 class LocationRepository {
   final FirebaseFirestore _firestore;
 
-  LocationRepository({FirebaseFirestore? firestore}) : _firestore = firestore ?? FirebaseFirestore.instance;
+  LocationRepository({FirebaseFirestore? firestore})
+    : _firestore = firestore ?? FirebaseFirestore.instance;
 
-  CollectionReference<Map<String, dynamic>> get _locations => _firestore.collection('locations');
+  CollectionReference<Map<String, dynamic>> get _locations =>
+      _firestore.collection('locations');
 
   Stream<List<Location>> watchLocations() {
-    return _locations.orderBy('name').snapshots().map(
-          (snapshot) => snapshot.docs.map(Location.fromFirestore).toList(),
-        );
+    return _locations
+        .orderBy('name')
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map(Location.fromFirestore).toList());
   }
 
   Future<String> upsertLocation(Location location) async {

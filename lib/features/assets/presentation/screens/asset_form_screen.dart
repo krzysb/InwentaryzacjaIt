@@ -160,7 +160,9 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
   Widget build(BuildContext context) {
     final categoriesAsync = ref.watch(categoriesProvider);
     final locationsAsync = ref.watch(locationsProvider);
-    final assetAsync = _isEditing ? ref.watch(assetDetailProvider(widget.assetId!)) : null;
+    final assetAsync = _isEditing
+        ? ref.watch(assetDetailProvider(widget.assetId!))
+        : null;
 
     if (assetAsync != null) {
       assetAsync.whenData((asset) {
@@ -169,7 +171,9 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(_isEditing ? 'Edytuj sprzet' : 'Dodaj sprzet')),
+      appBar: AppBar(
+        title: Text(_isEditing ? 'Edytuj sprzet' : 'Dodaj sprzet'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -179,7 +183,8 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
               TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(labelText: 'Nazwa / model *'),
-                validator: (v) => (v == null || v.trim().isEmpty) ? 'Podaj nazwe' : null,
+                validator: (v) =>
+                    (v == null || v.trim().isEmpty) ? 'Podaj nazwe' : null,
               ),
               const SizedBox(height: 12),
               TextFormField(
@@ -201,7 +206,9 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
               const SizedBox(height: 12),
               TextFormField(
                 controller: _vulcanController,
-                decoration: const InputDecoration(labelText: 'Numer z ewidencji Vulcan'),
+                decoration: const InputDecoration(
+                  labelText: 'Numer z ewidencji Vulcan',
+                ),
               ),
               const SizedBox(height: 12),
               categoriesAsync.when(
@@ -209,7 +216,10 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
                   initialValue: _categoryId,
                   decoration: const InputDecoration(labelText: 'Kategoria *'),
                   items: categories
-                      .map((c) => DropdownMenuItem(value: c.id, child: Text(c.name)))
+                      .map(
+                        (c) =>
+                            DropdownMenuItem(value: c.id, child: Text(c.name)),
+                      )
                       .toList(),
                   onChanged: (v) => setState(() => _categoryId = v),
                 ),
@@ -220,9 +230,16 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
               locationsAsync.when(
                 data: (locations) => DropdownButtonFormField<String>(
                   initialValue: _locationId,
-                  decoration: const InputDecoration(labelText: 'Pomieszczenie *'),
+                  decoration: const InputDecoration(
+                    labelText: 'Pomieszczenie *',
+                  ),
                   items: locations
-                      .map((l) => DropdownMenuItem(value: l.id, child: Text(l.displayName)))
+                      .map(
+                        (l) => DropdownMenuItem(
+                          value: l.id,
+                          child: Text(l.displayName),
+                        ),
+                      )
                       .toList(),
                   onChanged: (v) => setState(() => _locationId = v),
                 ),
@@ -234,7 +251,9 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
                 initialValue: _status,
                 decoration: const InputDecoration(labelText: 'Status'),
                 items: AssetStatus.values
-                    .map((s) => DropdownMenuItem(value: s, child: Text(s.label)))
+                    .map(
+                      (s) => DropdownMenuItem(value: s, child: Text(s.label)),
+                    )
                     .toList(),
                 onChanged: (v) => setState(() => _status = v ?? _status),
               ),
@@ -248,7 +267,11 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
               FilledButton(
                 onPressed: _saving ? null : _save,
                 child: _saving
-                    ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2))
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
                     : const Text('Zapisz'),
               ),
             ],

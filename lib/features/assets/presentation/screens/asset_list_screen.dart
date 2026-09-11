@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../auth/presentation/auth_providers.dart';
 import '../../../dictionaries/presentation/dictionary_providers.dart';
 import '../providers/asset_providers.dart';
 import '../widgets/asset_card.dart';
@@ -15,15 +16,62 @@ class AssetListScreen extends ConsumerWidget {
     final assetsAsync = ref.watch(assetListProvider);
     final categoriesAsync = ref.watch(categoriesProvider);
     final locationsAsync = ref.watch(locationsProvider);
+    final isAdmin = ref.watch(appUserProvider).value?.isAdmin ?? false;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sprzet IT'),
         actions: [
           IconButton(
+            icon: const Icon(Icons.bar_chart),
+            tooltip: 'Statystyki',
+            onPressed: () => context.push('/dashboard'),
+          ),
+          IconButton(
             icon: const Icon(Icons.qr_code_scanner),
             tooltip: 'Znajdz sprzet (skan)',
             onPressed: () => context.push('/scan-find'),
+          ),
+          PopupMenuButton<String>(
+            onSelected: (route) => context.push(route),
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: '/import',
+                child: ListTile(
+                  leading: Icon(Icons.upload_file),
+                  title: Text('Import z pliku'),
+                ),
+              ),
+              const PopupMenuItem(
+                value: '/labels',
+                child: ListTile(
+                  leading: Icon(Icons.qr_code_2),
+                  title: Text('Drukuj etykiety'),
+                ),
+              ),
+              const PopupMenuItem(
+                value: '/dictionaries',
+                child: ListTile(
+                  leading: Icon(Icons.category_outlined),
+                  title: Text('Slowniki'),
+                ),
+              ),
+              const PopupMenuItem(
+                value: '/duplicates',
+                child: ListTile(
+                  leading: Icon(Icons.content_copy),
+                  title: Text('Mozliwe duplikaty'),
+                ),
+              ),
+              if (isAdmin)
+                const PopupMenuItem(
+                  value: '/users',
+                  child: ListTile(
+                    leading: Icon(Icons.admin_panel_settings_outlined),
+                    title: Text('Uzytkownicy i role'),
+                  ),
+                ),
+            ],
           ),
         ],
       ),
@@ -34,7 +82,9 @@ class AssetListScreen extends ConsumerWidget {
             child: assetsAsync.when(
               data: (assets) {
                 if (assets.isEmpty) {
-                  return const Center(child: Text('Brak sprzetu spelniajacego kryteria.'));
+                  return const Center(
+                    child: Text('Brak sprzetu spelniajacego kryteria.'),
+                  );
                 }
                 final categories = categoriesAsync.value ?? [];
                 final locations = locationsAsync.value ?? [];
@@ -52,7 +102,8 @@ class AssetListScreen extends ConsumerWidget {
                 );
               },
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, _) => Center(child: Text('Blad wczytywania: $error')),
+              error: (error, _) =>
+                  Center(child: Text('Blad wczytywania: $error')),
             ),
           ),
         ],
