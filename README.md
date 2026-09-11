@@ -50,12 +50,14 @@ jak jest. Trzeba go nadpisac prawdziwa konfiguracja:
    Bez tego dokumentu logowanie zadziala, ale aplikacja nie przypisze roli
    (domyslnie `viewer` - tylko odczyt).
 
-Kategorie sprzetu (`categories`) aplikacja sama wypelni domyslnym zestawem
-przy pierwszym uruchomieniu, jesli kolekcja jest pusta (patrz
-`CategoryRepository.seedDefaultsIfEmpty()` - wywolaj to raz recznie lub
-podepnij pod start aplikacji). Pomieszczenia (`locations`) trzeba dodac
-recznie (ekran slownikow jest w planie na Faze 2-4) lub bezposrednio w
-konsoli Firebase.
+Kategorie sprzetu (`categories`) aplikacja **automatycznie** wypelni
+domyslnym zestawem przy pierwszym logowaniu konta z rola `admin`, jesli
+kolekcja jest pusta (patrz `app.dart` i
+`CategoryRepository.seedDefaultsIfEmpty()`). Pomieszczenia (`locations`)
+trzeba dodac recznie (ekran slownikow jest w planie na Faze 2-4) - bez
+tego formularz dodawania sprzetu nie bedzie mial czego zaproponowac w polu
+"Pomieszczenie". Najszybciej: dodaj chocby jeden dokument recznie w
+konsoli Firebase, kolekcja `locations`, pole `name` (np. "Sala 12").
 
 ## Uruchomienie
 
