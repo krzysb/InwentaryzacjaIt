@@ -161,4 +161,45 @@ class AssetRepository {
   Future<void> deleteAsset(String id) async {
     await _assets.doc(id).delete();
   }
+
+  /// Scala dwa rekordy uznane za duplikaty w jednej operacji atomowej:
+  /// zapisuje wybrane pola w rekordzie glownym ([mergedPrimary]), oznacza
+  /// drugi rekord ([duplicate]) jako wycofany duplikat glownego oraz
+  /// dopisuje wpis w historii glownego rekordu.
+  Future<void> mergeAssets({
+    required Asset duplicate,
+    required Asset mergedPrimary,
+    required String changedBy,
+  }) async {
+    final batch = _firestore.batch();
+    batch.update(_assets.doc(mergedPrimary.id), mergedPrimary.toFirestore());
+    batch.update(
+      _assets.doc(duplicate.id),
+      duplicate
+          .copyWith(
+            duplicateOfAssetId: mergedPrimary.id,
+            status: AssetStatus.wycofany,
+            updatedAt: DateTime.now(),
+            updatedBy: changedBy,
+          )
+          .toFirestore(),
+    );
+    final historyRef = _assets
+        .doc(mergedPrimary.id)
+        .collection('history')
+        .doc();
+    batch.set(
+      historyRef,
+      HistoryEntry(
+        id: historyRef.id,
+        type: HistoryEntryType.edit,
+        fromValue: duplicate.assetTag,
+        toValue: null,
+        changedAt: DateTime.now(),
+        changedBy: changedBy,
+        note: 'Scalono duplikat (S/N: ${duplicate.serialNumber ?? "-"})',
+      ).toFirestore(),
+    );
+    await batch.commit();
+  }
 }

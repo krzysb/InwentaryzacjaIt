@@ -49,6 +49,13 @@ class AssetListScreen extends ConsumerWidget {
                   title: Text('Slowniki'),
                 ),
               ),
+              PopupMenuItem(
+                value: '/duplicates',
+                child: ListTile(
+                  leading: Icon(Icons.content_copy),
+                  title: Text('Mozliwe duplikaty'),
+                ),
+              ),
             ],
           ),
         ],

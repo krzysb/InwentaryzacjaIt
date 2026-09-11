@@ -9,6 +9,7 @@ import '../../features/assets/presentation/screens/asset_list_screen.dart';
 import '../../features/auth/presentation/auth_providers.dart';
 import '../../features/auth/presentation/login_screen.dart';
 import '../../features/dictionaries/presentation/dictionaries_screen.dart';
+import '../../features/duplicates/presentation/duplicates_screen.dart';
 import '../../features/import_export/presentation/import_wizard_screen.dart';
 import '../../features/labels/presentation/labels_screen.dart';
 import '../../features/scanner/presentation/find_asset_scanner_screen.dart';
@@ -61,6 +62,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/dictionaries',
         builder: (context, state) => const DictionariesScreen(),
+      ),
+      GoRoute(
+        path: '/duplicates',
+        builder: (context, state) => const DuplicatesScreen(),
       ),
     ],
   );

@@ -98,7 +98,7 @@ firestore.indexes.json   # indeksy zlozone pod filtrowanie
 - ✅ Generowanie i druk etykiet QR (arkusz PDF, wybor sprzetu do druku lub pojedyncza etykieta ze szczegolow)
 - ✅ Filtr "niekompletne" na liscie sprzetu (odpowiednik ekranu "do uzupelnienia")
 - ✅ Slowniki kategorii/pomieszczen (CRUD w UI - dodawanie/edycja/usuwanie, bez konsoli Firebase)
-- ⏳ Scalanie duplikatow
+- ✅ Wykrywanie mozliwych duplikatow (po numerze seryjnym) i ekran scalania rekordow pole po polu
 - ⏳ Role uzytkownikow w UI (admin/editor/viewer) i dashboard
 
 ## Import danych z Vulcan (Inwentarz Optivum)
